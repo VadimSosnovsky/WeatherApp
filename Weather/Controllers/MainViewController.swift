@@ -54,11 +54,12 @@ extension MainViewController {
         pageControl.currentPageIndicatorTintColor = .mainWhite()
 
         self.addChild(pageViewController)
-        self.view.addSubview(self.pageViewController!.view)
+        self.view.addSubview(self.pageViewController.view)
         
         let initialVC: UIViewController
         if citiesArray.count > 0 {
-            initialVC = PageViewController(with: citiesArray[0], index: citiesArray.firstIndex(of: citiesArray[0])!)
+            guard let firstCityIndex = citiesArray.firstIndex(of: citiesArray[0]) else { return }
+            initialVC = PageViewController(with: citiesArray[0], index: firstCityIndex)
             self.pageViewController?.setViewControllers([initialVC], direction: .forward, animated: true, completion: nil)
         }
         pageViewController?.didMove(toParent: self)
@@ -80,8 +81,10 @@ extension MainViewController {
             self?.citiesArray.append(city)
             UserDefaultsManager.shared.cities = self?.citiesArray
 
-            self?.pageViewController.reloadInputViews()            
-            let initialVC = PageViewController(with: (self?.citiesArray[0])!, index: (self?.citiesArray.firstIndex(of: (self?.citiesArray[0])!)!)!)
+            self?.pageViewController.reloadInputViews()
+            guard let firstSityItem = self?.citiesArray[0] else { return }
+            guard let firstCityIndex = self?.citiesArray.firstIndex(of: firstSityItem) else { return }
+            let initialVC = PageViewController(with: firstSityItem, index: firstCityIndex)
             self!.pageViewController?.setViewControllers([initialVC], direction: .forward, animated: false, completion: nil)
         }
     }
@@ -103,7 +106,8 @@ extension MainViewController: UIPageViewControllerDataSource, UIPageViewControll
         
         index -= 1
         
-        let vc: PageViewController = PageViewController(with: citiesArray[index], index: citiesArray.firstIndex(of: citiesArray[index])!)
+        guard let currentCityIndex = citiesArray.firstIndex(of: citiesArray[index]) else { return nil }
+        let vc: PageViewController = PageViewController(with: citiesArray[index], index: currentCityIndex)
         
         return vc
     }
@@ -122,7 +126,8 @@ extension MainViewController: UIPageViewControllerDataSource, UIPageViewControll
         
         index += 1
         
-        let vc: PageViewController = PageViewController(with: citiesArray[index], index: citiesArray.firstIndex(of: citiesArray[index])!)
+        guard let currentCityIndex = citiesArray.firstIndex(of: citiesArray[index]) else { return nil }
+        let vc: PageViewController = PageViewController(with: citiesArray[index], index: currentCityIndex)
         
         return vc
     }

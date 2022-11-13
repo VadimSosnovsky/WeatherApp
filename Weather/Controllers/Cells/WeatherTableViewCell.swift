@@ -77,8 +77,11 @@ extension WeatherTableViewCell {
         else { return }
         weatherImageView.sd_setImage(with: url)
         
-        dayTempLabel.text = "\(weather.parts.day.tempAvg!)"
-        nightTempLabel.text = "\(weather.parts.night.tempAvg!)"
+        guard let dayTempAverage = weather.parts.day.tempAvg else { return }
+        guard let nightTempAverage = weather.parts.night.tempAvg else { return }
+        
+        dayTempLabel.text = "\(dayTempAverage)"
+        nightTempLabel.text = "\(nightTempAverage)"
     }
 }
 

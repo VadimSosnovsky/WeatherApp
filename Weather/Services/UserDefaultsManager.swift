@@ -10,6 +10,7 @@ import UIKit
 class UserDefaultsManager {
     
     static let shared = UserDefaultsManager()
+    private init() {}
     
     let defaults = UserDefaults.standard
     

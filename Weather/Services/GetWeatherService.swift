@@ -8,7 +8,12 @@
 import UIKit
 import CoreLocation
 
-struct GetWeatherService {
+protocol WeatherProtocol {
+    func getCityWeather(city: String, completion: @escaping (Weather?) -> Void)
+    func getCoordinateFrom(city: String, completion: @escaping (_ coordinate: CLLocationCoordinate2D?, _ error: Error?) -> ())
+}
+
+struct GetWeatherService: WeatherProtocol {
     
     static let shared = GetWeatherService()
     

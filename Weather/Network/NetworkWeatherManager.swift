@@ -9,7 +9,11 @@ import UIKit
 import Alamofire
 import CoreLocation
 
-struct NetworkWeatherManager {
+protocol NetworkWeatherProtocol {
+    func fetchWeather(latitude: Double, longitude: Double, completionHandler: @escaping (Weather?) -> Void)
+}
+
+struct NetworkWeatherManager: NetworkWeatherProtocol {
     
     static let shared = NetworkWeatherManager()
     

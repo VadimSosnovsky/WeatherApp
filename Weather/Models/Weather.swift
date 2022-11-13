@@ -57,9 +57,18 @@ struct Weather {
         condition = weatherData.fact.condition
         presureMm = weatherData.fact.pressureMm
         windSpeed = weatherData.fact.windSpeed
-        tempMin = weatherData.forecasts.first!.parts.day.tempMin!
-        tempMax = weatherData.forecasts.first!.parts.day.tempMax!
-        hours = weatherData.forecasts.first!.hours
+        
+        guard let firstItem = weatherData.forecasts.first else { return nil }
+        
+        if let tempMin = firstItem.parts.day.tempMin {
+            self.tempMin = tempMin
+        }
+        
+        if let tempMax = firstItem.parts.day.tempMax {
+            self.tempMax = tempMax
+        }
+
+        hours = firstItem.hours
         cityName = weatherData.geoObject.locality.name
         forecasts = weatherData.forecasts
         offset = weatherData.info.tzinfo.offset

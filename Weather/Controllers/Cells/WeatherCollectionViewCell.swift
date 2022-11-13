@@ -40,8 +40,11 @@ extension WeatherCollectionViewCell {
         else { return }
         weatherImageView.sd_setImage(with: url)
         
-        hourLabel.text = "\(cell.hour!)"
-        tempLabel.text = "\(cell.temp!)º"
+        guard let hour = cell.hour else { return }
+        guard let temp = cell.temp else { return }
+        
+        hourLabel.text = "\(hour)"
+        tempLabel.text = "\(temp)º"
     }
 }
 

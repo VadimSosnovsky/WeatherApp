@@ -42,7 +42,13 @@ extension WeatherCollectionView {
         customDateFormatter.timeZone = TimeZone(secondsFromGMT: offset)
         let timeThere = customDateFormatter.string(from: timeHere)
         
-        self.cells = cells.filter({Int($0.hour!)! >= Int(timeThere)!})
+        self.cells = cells.filter({
+            guard let hour = $0.hour,
+                  let convertedHour = Int(hour),
+                  let convertedTime = Int(timeThere)
+            else { return false }
+            return convertedHour >= convertedTime
+        })
     }
 }
 
